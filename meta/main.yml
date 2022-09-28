@@ -2,7 +2,7 @@ galaxy_info:
   author: Frolls
   description: install nginx and configure reverse proxy
   company: iddqd
-  role_name: reverse-proxy
+  role_name: reverse-proxy-role
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value

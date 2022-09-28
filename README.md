@@ -1,5 +1,5 @@
-Reverse-proxy
-==============
+Reverse-proxy-role
+====================
 
 Reverse proxy с поддержкой TLS для обеспечения безопасного доступа к веб-сервисам по HTTPS
 
@@ -28,7 +28,7 @@ Example Playbook
   vars_files:
     - group_vars/web_servers.yml
   roles:
-    - role: reverse-proxy
+    - role: reverse-proxy-role
 ...
 ```
 
