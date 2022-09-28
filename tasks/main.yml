@@ -14,7 +14,6 @@
     letsencrypt certonly
     --renew-by-default
     --break-my-certs
-    --test-cert
     --nginx
     --agree-tos
     --email {{ letsencrypt_email }}
