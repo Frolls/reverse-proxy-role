@@ -1,0 +1,43 @@
+---
+# tasks file for reverse-proxy
+# Установка Nginx
+- include_tasks: install.yml
+
+- name: Remove nginx default
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: Restart nginx
+
+- name: Create letsencrypt certificates # --test-cert
+  ansible.builtin.shell: >
+    letsencrypt certonly
+    --renew-by-default
+    --break-my-certs
+    --test-cert
+    --nginx
+    --agree-tos
+    --email {{ letsencrypt_email }}
+    -d {{ item.name }}
+  with_items: "{{ web_servers }}"
+  when: tls_enabled
+
+- name: Create configure files
+  ansible.builtin.template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/conf.d/{{ item.name }}.conf
+    mode: u=rw # 0600
+  notify: Restart nginx
+  tags: nginx
+  with_items: "{{ web_servers }}"
+  when: tls_enabled
+
+- name: Generate dhparams
+  ansible.builtin.shell: openssl dhparam -out {{ dhparams_path }}.pem 2048
+  args:
+    creates: "{{ dhparams_path }}.pem"
+  notify: Restart nginx
+  when: tls_enabled
+
+# Добавление задач в cron
+- include_tasks: cron.yml

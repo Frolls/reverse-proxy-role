@@ -1,0 +1,8 @@
+---
+# defaults file for reverse-proxy
+server_name: localhost
+server_ip: 127.0.0.1
+
+tls_enabled: true
+
+letsencrypt_email: frolls@outlook.com

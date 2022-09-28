@@ -1,0 +1,9 @@
+---
+# vars file for reverse-proxy
+install_packages:
+  - nginx
+  - certbot
+  - python3-certbot-nginx
+
+ssl_conf_path: /etc/nginx/ssl
+dhparams_path: /etc/nginx/dhparams

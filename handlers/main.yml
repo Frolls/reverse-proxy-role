@@ -1,0 +1,14 @@
+---
+# handlers file for reverse-proxy
+- name: Start nginx
+  ansible.builtin.service:
+    name: nginx
+    enabled: true
+    state: started
+  become: true
+
+- name: Restart nginx
+  ansible.builtin.service:
+    name: nginx
+    state: restarted
+  become: true

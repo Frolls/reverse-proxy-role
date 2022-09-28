@@ -1,0 +1,24 @@
+---
+- name: Add letsencrypt cronjob for cert`s renewal
+  ansible.builtin.cron:
+    name: letsencrypt renewal to {{ item.name }}
+    weekday: "2"
+    minute: "0"
+    hour: "0"
+    job: >
+      letsencrypt certonly
+      --renew-by-default
+      --nginx 
+      --agree-tos
+      --email {{ letsencrypt_email }}
+      -d {{ item.name }}
+  with_items: "{{ web_servers }}"
+  when: tls_enabled
+
+- name: Add crontab to reload nginx
+  ansible.builtin.cron:
+    name: Restart nginx
+    weekday: "2"
+    minute: "10"
+    hour: "0"
+    job: "systemctl restart nginx.service"

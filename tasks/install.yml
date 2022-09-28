@@ -1,0 +1,17 @@
+---
+- name: Read web_servers.yml
+  ansible.builtin.debug:
+    msg: "{{ item.name }}: {{ item.ip }}"
+  with_items: "{{ web_servers }}"
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Install required packages
+  ansible.builtin.apt:
+    name: "{{ install_packages }}"
+    state: present
+  tags:
+    - install_packages
